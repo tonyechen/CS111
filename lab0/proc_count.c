@@ -47,14 +47,23 @@
 
 static struct proc_dir_entry *count_proc_file;
 
-static ssize_t count_proc_show(struct seq_file *filePointer, void *offset) {
-	
+static int count_proc_show (struct seq_file *filePointer, void *offset) {
+	struct task_struct *task_list;
+	int len = 0;
+
+	for_each_process(task_list) {
+		len  += 1;
+	}
+
+	seq_printf(filePointer, "%d\n", len);
+
+	return 0;
 }
 
 static int __init proc_count_init(void)
 {
 	pr_info("proc_count: init\n");
-	count_proc_file = proc_create_single_data(procfs_name, 0644, NULL, &show, 0);
+	count_proc_file = proc_create_single_data(procfs_name, 0644, NULL, count_proc_show, 0);
 	if (NULL == count_proc_file) {
 		proc_remove(count_proc_file);
 		pr_alert("Error:Could not initialize /proc/%S\n", procfs_name);
