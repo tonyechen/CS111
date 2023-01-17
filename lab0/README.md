@@ -5,14 +5,27 @@ One sentence description
 ## Building
 
 Explain how to build your kernel module
+```shell
+make
+```
+```shell
+sudo insmod proc_count.ko
+```
 
 ## Running
 
 Explain how to run your kernel module and what to expect
+```shell
+/proc/count
+````
 
 ## Cleaning Up
 
 Explain how to remove your kernel module and clean up the code
+```shell
+sudo rmmod proc_count.ko
+make clean
+```
 
 ## Testing
 
